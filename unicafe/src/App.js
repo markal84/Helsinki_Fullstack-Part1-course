@@ -62,13 +62,22 @@ function Button({ text, handleClick }) {
   );
 }
 
-function Statistics({ good, neutral, bad }) {
+function Statistics({ good, neutral, bad, all, average, positive }) {
+  const averageResult = (
+    average.reduce((a, b) => a + b, 0) / average.length
+  ).toFixed(2);
+
+  const positiveResult = ((positive / all) * 100).toFixed(1);
+
   return (
     <div>
       <h2>Statistics</h2>
       <SingleStat text="good" score={good} />
       <SingleStat text="neutral" score={neutral} />
       <SingleStat text="bad" score={bad} />
+      <SingleStat text="all" score={all} />
+      <SingleStat text="average" score={averageResult} />
+      <SingleStat text="positive" score={`${positiveResult} %`} />
     </div>
   );
 }
@@ -85,17 +94,28 @@ function App() {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  const [all, setAll] = useState(0);
+  const [average, setAverage] = useState([]);
+  const [positive, setPositive] = useState(0);
 
   const handleGoodClick = () => {
     setGood(good + 1);
+    setAll(all + 1);
+    setAverage(average.concat(1));
+    setPositive(positive + 1);
   };
 
   const handleNeutClick = () => {
     setNeutral(neutral + 1);
+    setAll(all + 1);
+    setAverage(average.concat(0));
   };
 
   const handleBadClick = () => {
     setBad(bad + 1);
+    setAll(all + 1);
+    setAverage(average - 1);
+    setAverage(average.concat(-1));
   };
 
   return (
@@ -105,7 +125,14 @@ function App() {
         neutral={handleNeutClick}
         bad={handleBadClick}
       />
-      <Statistics good={good} neutral={neutral} bad={bad} />
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        all={all}
+        average={average}
+        positive={positive}
+      />
     </>
   );
 }
