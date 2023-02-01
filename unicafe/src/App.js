@@ -1,25 +1,163 @@
-function Hello(props) {
-  const { name, age } = props;
+import { useState } from 'react';
+
+/*
+function History({ allClicks }) {
+  if (allClicks.length === 0) {
+    return <div>the app is used by pressing buttons</div>;
+  }
+  return <div>button press history: {allClicks.join('| ')}</div>;
+}
+
+function Button({ handleClick, text }) {
   return (
-    <div>
-      <p>
-        Hello {name}, you are {age} years old
-      </p>
-    </div>
+    <button type="button" onClick={handleClick}>
+      {text}
+    </button>
   );
 }
 
 function App() {
-  const name = 'Peter';
-  const age = 10;
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
+  const [allClicks, setAll] = useState([]);
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'));
+    setLeft(left + 1);
+  };
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat('R'));
+    setRight(right + 1);
+  };
 
   return (
     <div>
-      <h1>Greetings</h1>
-      <Hello name="Maya" age={26 + 10} />
-      <Hello name={name} age={age} />
+      {left}
+      <Button handleClick={handleLeftClick} text="left" />
+      <Button handleClick={handleRightClick} text="right" />
+      {right}
+      <History allClicks={allClicks} />
     </div>
   );
 }
+*/
+
+function Feedback({ good, neutral, bad }) {
+  return (
+    <div>
+      <h1>Give feedback</h1>
+      <Button text="good" handleClick={good} />
+      <Button text="neutral" handleClick={neutral} />
+      <Button text="bad" handleClick={bad} />
+    </div>
+  );
+}
+
+function Button({ text, handleClick }) {
+  return (
+    <button type="button" onClick={handleClick}>
+      {text}
+    </button>
+  );
+}
+
+function Statistics({ good, neutral, bad }) {
+  return (
+    <div>
+      <h2>Statistics</h2>
+      <SingleStat text="good" score={good} />
+      <SingleStat text="neutral" score={neutral} />
+      <SingleStat text="bad" score={bad} />
+    </div>
+  );
+}
+
+function SingleStat({ text, score }) {
+  return (
+    <p>
+      {text} : {score}
+    </p>
+  );
+}
+
+function App() {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const handleGoodClick = () => {
+    setGood(good + 1);
+  };
+
+  const handleNeutClick = () => {
+    setNeutral(neutral + 1);
+  };
+
+  const handleBadClick = () => {
+    setBad(bad + 1);
+  };
+
+  return (
+    <>
+      <Feedback
+        good={handleGoodClick}
+        neutral={handleNeutClick}
+        bad={handleBadClick}
+      />
+      <Statistics good={good} neutral={neutral} bad={bad} />
+    </>
+  );
+}
+
+/*
+function Button(props) {
+  const { text, handleClick } = props;
+  console.log('Button props', props);
+  return (
+    <button type="button" onClick={handleClick}>
+      {text}
+    </button>
+  );
+}
+
+function SingleStat(props) {
+  // console.log(props);
+  const { text } = props;
+  return <p>{text} :</p>;
+}
+
+function App() {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const handleGoodClick = () => {
+    setGood(good + 1);
+    console.log('good feedback is now', good);
+  };
+
+  const handleNeutClick = () => {
+    setNeutral(neutral + 1);
+  };
+
+  const handleBadClick = () => {
+    setBad(bad + 1);
+  };
+
+  return (
+    <div>
+      <h1>Give Feedback</h1>
+      <Button text="good" handleClick={handleGoodClick} />
+      <Button text="neutral" handleClick={handleNeutClick} />
+      <Button text="bad" handleClick={handleBadClick} />
+      <h2>Statistics</h2>
+      <SingleStat text="good" />
+      <SingleStat text="neutral" />
+      <SingleStat text="bad" />
+    </div>
+  );
+}
+*/
 
 export default App;
