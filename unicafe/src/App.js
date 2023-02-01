@@ -69,6 +69,15 @@ function Statistics({ good, neutral, bad, all, average, positive }) {
 
   const positiveResult = ((positive / all) * 100).toFixed(1);
 
+  if (all <= 0) {
+    return (
+      <div>
+        <h2>Statistics</h2>
+        <h3>No feedback given</h3>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h2>Statistics</h2>
