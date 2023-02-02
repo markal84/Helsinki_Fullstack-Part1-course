@@ -69,7 +69,7 @@ function Statistics({ good, neutral, bad, all, average, positive }) {
 
   const positiveResult = ((positive / all) * 100).toFixed(1);
 
-  if (all <= 0) {
+  if (!all) {
     return (
       <div>
         <h2>Statistics</h2>
@@ -81,21 +81,28 @@ function Statistics({ good, neutral, bad, all, average, positive }) {
   return (
     <div>
       <h2>Statistics</h2>
-      <SingleStat text="good" score={good} />
-      <SingleStat text="neutral" score={neutral} />
-      <SingleStat text="bad" score={bad} />
-      <SingleStat text="all" score={all} />
-      <SingleStat text="average" score={averageResult} />
-      <SingleStat text="positive" score={`${positiveResult} %`} />
+      <table>
+        <tbody>
+          <SingleStat text="good" score={good} />
+          <SingleStat text="neutral" score={neutral} />
+          <SingleStat text="bad" score={bad} />
+          <SingleStat text="all" score={all} />
+          <SingleStat text="average" score={averageResult} />
+          <SingleStat text="positive" score={`${positiveResult} %`} />
+        </tbody>
+      </table>
     </div>
   );
 }
 
 function SingleStat({ text, score }) {
   return (
-    <p>
-      {text} : {score}
-    </p>
+    <tr>
+      <td>
+        {text} {' :'}
+      </td>
+      <td>{score}</td>
+    </tr>
   );
 }
 
