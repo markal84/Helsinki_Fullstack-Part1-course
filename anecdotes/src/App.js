@@ -8,6 +8,24 @@ function Button({ text, handleClick }) {
   );
 }
 
+function MostVotes({ anecdotes, hasMostVotes }) {
+  if (hasMostVotes > 0) {
+    return (
+      <div>
+        <h2>Anecdote with the most votes</h2>
+        {anecdotes}
+        <p>has {hasMostVotes} votes</p>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <h2>Anecdote with the most votes</h2>
+      <p>Please vote to see result</p>
+    </div>
+  );
+}
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -20,12 +38,16 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
+  // create empty filled array == anecdotes.length
   const votes = new Array(anecdotes.length).fill(0);
+  // generate random number
   const random = (arr = anecdotes) => Math.floor(Math.random() * arr.length);
-  const hasMostVotes = 1;
 
   const [selected, setSelected] = useState(random());
   const [vote, setVote] = useState(votes);
+
+  // display anagdote with the most votes
+  const hasMostVotes = Math.max(...vote);
 
   const handleAnecdotes = (arr) => {
     setSelected(random(arr));
@@ -49,9 +71,10 @@ const App = () => {
         text="next anecdote"
         handleClick={() => handleAnecdotes(anecdotes)}
       />
-      <div>
-        <h2>Anecdote with the most votes</h2>
-      </div>
+      <MostVotes
+        anecdotes={anecdotes[vote.indexOf(Math.max(...vote))]}
+        hasMostVotes={hasMostVotes}
+      />
     </>
   );
 };
