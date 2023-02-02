@@ -21,13 +21,14 @@ const App = () => {
   ];
 
   const votes = new Array(anecdotes.length).fill(0);
+  const random = (arr = anecdotes) => Math.floor(Math.random() * arr.length);
+  const hasMostVotes = 1;
 
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(random());
   const [vote, setVote] = useState(votes);
 
   const handleAnecdotes = (arr) => {
-    setSelected(Math.floor(Math.random() * arr.length));
-    //console.log(selected);
+    setSelected(random(arr));
   };
 
   const handleVotes = () => {
@@ -39,6 +40,7 @@ const App = () => {
   return (
     <>
       <div>
+        <h2>Anecdodte of the day</h2>
         {anecdotes[selected]}
         <p>has {vote[selected]} votes.</p>
       </div>
@@ -47,6 +49,9 @@ const App = () => {
         text="next anecdote"
         handleClick={() => handleAnecdotes(anecdotes)}
       />
+      <div>
+        <h2>Anecdote with the most votes</h2>
+      </div>
     </>
   );
 };
